@@ -55,9 +55,8 @@ async-trait = "0.1.72"
 
 rand = "0.8.5"
 uuid = {version = "1.4.0", features=["serde"]}
-time = { version = "0.3", features = ["macros", "serde-well-known"] }
-serde_with = { version = "2", features = ["time_0_3"] }
-cln-grpc = { git = "https://github.com/cdecker/lightning", branch = "20231107-grpc-methods" }
+time = { version = "0.3", features = ["macros"] }
+cln-grpc = { git = "https://github.com/hydra-yse/lightning", branch = "20231107-grpc-methods" }
 
 [build-dependencies]
 tonic-build = "^0.8"
