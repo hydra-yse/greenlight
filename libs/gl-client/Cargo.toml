@@ -38,7 +38,6 @@ vls-protocol-signer = { git="https://gitlab.com/cdecker/vls", tag="snapshot-2023
 vls-protocol = { git="https://gitlab.com/cdecker/vls", tag="snapshot-20230920" }
 serde_json = "^1.0"
 thiserror = "1"
-cln-grpc = "^0.1"
 chacha20poly1305 = { version = "0.10.1", optional = true }
 
 serde_bolt = "0.2"
@@ -51,6 +50,7 @@ rand = "0.8.5"
 uuid = {version = "1.4.0", features=["serde"]}
 time = { version = "0.3", features = ["macros", "serde-well-known"] }
 serde_with = { version = "2", features = ["time_0_3"] }
+cln-grpc = { git = "https://github.com/cdecker/lightning", branch = "20231107-grpc-methods" }
 
 [build-dependencies]
 tonic-build = "^0.8"

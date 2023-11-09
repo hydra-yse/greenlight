@@ -531,9 +531,8 @@ dependencies = [
 
 [[package]]
 name = "cln-grpc"
-version = "0.1.6"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "57af6eff15ee3fd7a0e09d0baeab8d33c892a73d97b87248e5f94f4749eacfe1"
+version = "0.1.7"
+source = "git+https://github.com/cdecker/lightning?branch=20231107-grpc-methods#075927b2c5f38fdbde4c0764135be58340b0ce08"
 dependencies = [
  "anyhow",
  "bitcoin 0.30.1",
@@ -1166,7 +1165,7 @@ dependencies = [
  "bitcoin 0.30.1",
  "bytes 1.5.0",
  "chacha20poly1305",
- "cln-grpc 0.1.6",
+ "cln-grpc 0.1.7 (git+https://github.com/cdecker/lightning?branch=20231107-grpc-methods)",
  "futures",
  "hex",
  "http",
@@ -1229,7 +1228,7 @@ dependencies = [
  "base64 0.21.5",
  "bytes 1.5.0",
  "clightningrpc",
- "cln-grpc 0.1.7",
+ "cln-grpc 0.1.7 (git+https://github.com/ElementsProject/lightning.git?branch=master)",
  "cln-plugin",
  "cln-rpc",
  "env_logger 0.7.1",
