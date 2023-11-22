@@ -23,7 +23,7 @@ anyhow = "1"
 env_logger = "0.10"
 cln-grpc = {git = "https://github.com/hydra-yse/lightning.git", branch = "20231122-offer-grpc" }
 cln-rpc = {git = "https://github.com/cdecker/lightning.git", tag = "gl-20231113" }
-
+cln-plugin = "0.1.7"
 vls-core = "=0.10.1"
 vls-persist = "=0.10.0"
 vls-protocol-signer = "=0.10.0"
