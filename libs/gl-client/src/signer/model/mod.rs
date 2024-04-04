@@ -53,6 +53,7 @@ pub enum Request {
     WaitInvoice(cln::WaitinvoiceRequest),
     WaitSendPay(cln::WaitsendpayRequest),
     NewAddr(cln::NewaddrRequest),
+    Offer(cln::OfferRequest),
     Withdraw(cln::WithdrawRequest),
     KeySend(cln::KeysendRequest),
     FundPsbt(cln::FundpsbtRequest),

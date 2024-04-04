@@ -6,7 +6,7 @@ use anyhow::{anyhow, Context};
 
 use serde::de::Error as SeError;
 use serde::ser::Error as DeError;
-use serde::{Deserialize, Serialize, Deserializer, Serializer};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 use time::format_description::FormatItem;
 use time::macros::format_description;
@@ -149,7 +149,6 @@ impl<'de> Deserialize<'de> for MsatAmount {
         Ok(Self(u64_repr.unwrap()))
     }
 }
-
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct ShortChannelId(u64);

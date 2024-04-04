@@ -234,7 +234,7 @@ impl Scheduler {
             .await?;
         Ok(res.into_inner())
     }
-    
+
     pub async fn add_outgoing_webhook(
         &self,
         outgoing_webhook_request: pb::scheduler::AddOutgoingWebhookRequest,
@@ -245,7 +245,7 @@ impl Scheduler {
             .add_outgoing_webhook(outgoing_webhook_request)
             .await?;
         Ok(res.into_inner())
-    }    
+    }
 
     pub async fn list_outgoing_webhooks(
         &self,
@@ -257,7 +257,7 @@ impl Scheduler {
             .list_outgoing_webhooks(list_outgoing_webhooks_request)
             .await?;
         Ok(res.into_inner())
-    }    
+    }
 
     pub async fn delete_webhooks(
         &self,
@@ -269,11 +269,11 @@ impl Scheduler {
             .delete_webhooks(delete_webhooks_request)
             .await?;
         Ok(res.into_inner())
-    }    
+    }
 
     pub async fn rotate_outgoing_webhook_secret(
         &self,
-        rotate_outgoing_webhook_secret_request: pb::scheduler::RotateOutgoingWebhookSecretRequest
+        rotate_outgoing_webhook_secret_request: pb::scheduler::RotateOutgoingWebhookSecretRequest,
     ) -> Result<pb::scheduler::WebhookSecretResponse> {
         let res = self
             .client
@@ -281,5 +281,5 @@ impl Scheduler {
             .rotate_outgoing_webhook_secret(rotate_outgoing_webhook_secret_request)
             .await?;
         Ok(res.into_inner())
-    }    
+    }
 }

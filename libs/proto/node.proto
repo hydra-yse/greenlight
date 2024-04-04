@@ -58,6 +58,7 @@ service Node {
 	rpc ListForwards(ListforwardsRequest) returns (ListforwardsResponse) {}
 	rpc ListPays(ListpaysRequest) returns (ListpaysResponse) {}
 	rpc ListHtlcs(ListhtlcsRequest) returns (ListhtlcsResponse) {}
+	rpc Offer(OfferRequest) returns (OfferResponse) {}
 	rpc Ping(PingRequest) returns (PingResponse) {}
 	rpc SendCustomMsg(SendcustommsgRequest) returns (SendcustommsgResponse) {}
 	rpc SetChannel(SetchannelRequest) returns (SetchannelResponse) {}
@@ -1765,6 +1766,30 @@ message ListhtlcsHtlcs {
 	ListhtlcsHtlcsDirection direction = 5;
 	bytes payment_hash = 6;
 	HtlcState state = 7;
+}
+
+message OfferRequest {
+	string amount = 1;
+	string description = 2;
+	optional string issuer = 3;
+	optional string label = 4;
+	optional uint64 quantity_max = 5;
+	optional uint64 absolute_expiry = 6;
+	optional string recurrence = 7;
+	optional string recurrence_base = 8;
+	optional string recurrence_paywindow = 9;
+	optional uint32 recurrence_limit = 10;
+	optional bool single_use = 11;
+}
+
+message OfferResponse {
+	bytes offer_id = 1;
+	bool active = 2;
+	bool single_use = 3;
+	string bolt12 = 4;
+	bool used = 5;
+	bool created = 6;
+	optional string label = 7;
 }
 
 message PingRequest {

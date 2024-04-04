@@ -35,7 +35,7 @@ where
 {
     pub const fn new(method: &'static str) -> Self {
         Self {
-						method,
+            method,
             request: std::marker::PhantomData,
             return_type: std::marker::PhantomData,
             error_type: std::marker::PhantomData,
@@ -65,10 +65,10 @@ where
     }
 }
 
-impl<I, O, E> std::convert::From<&JsonRpcMethod<I, O, E>> for String 
+impl<I, O, E> std::convert::From<&JsonRpcMethod<I, O, E>> for String
 where
-    E: MapErrorCode
-		{
+    E: MapErrorCode,
+{
     fn from(value: &JsonRpcMethod<I, O, E>) -> Self {
         value.method.into()
     }
@@ -141,7 +141,7 @@ impl<I> JsonRpcRequest<I> {
             id: generate_random_rpc_id(),
             method: method.method.into(),
             params,
-        }
+        };
     }
 }
 
@@ -155,7 +155,7 @@ impl JsonRpcRequest<NoParams> {
             id: generate_random_rpc_id(),
             method: method.method.into(),
             params: NoParams::default(),
-        }
+        };
     }
 }
 

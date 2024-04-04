@@ -177,16 +177,18 @@ fn ensure_amount_is_within_range(
 //LUD-16: Paying to static internet identifiers.
 pub fn parse_lightning_address(lightning_address: &str) -> Result<String> {
     let lightning_address_components: Vec<&str> = lightning_address.split("@").collect();
-    
+
     if lightning_address_components.len() != 2 {
-        return Err(anyhow!("The provided lightning address is improperly formatted"));
+        return Err(anyhow!(
+            "The provided lightning address is improperly formatted"
+        ));
     }
 
     let username = match lightning_address_components.get(0) {
         None => return Err(anyhow!("Could not parse username in lightning address")),
         Some(u) => {
             if u.is_empty() {
-                return Err(anyhow!("Username can not be empty"))
+                return Err(anyhow!("Username can not be empty"));
             }
 
             u
@@ -197,7 +199,7 @@ pub fn parse_lightning_address(lightning_address: &str) -> Result<String> {
         None => return Err(anyhow!("Could not parse domain in lightning address")),
         Some(d) => {
             if d.is_empty() {
-                return Err(anyhow!("Domain can not be empty"))
+                return Err(anyhow!("Domain can not be empty"));
             }
 
             d
@@ -292,7 +294,6 @@ mod tests {
         assert!(invoice.is_ok());
     }
 
-
     #[tokio::test]
     async fn test_lnurl_pay_with_lightning_address_fails_with_empty_username() {
         let mock_http_client = MockLnUrlHttpClient::new();
@@ -307,7 +308,10 @@ mod tests {
 
         let error = resolve_lnurl_to_invoice(&mock_http_client, &lnurl, amount).await;
         assert!(error.is_err());
-        assert!(error.unwrap_err().to_string().contains("Username can not be empty"));
+        assert!(error
+            .unwrap_err()
+            .to_string()
+            .contains("Username can not be empty"));
     }
 
     #[tokio::test]
@@ -324,7 +328,10 @@ mod tests {
 
         let error = resolve_lnurl_to_invoice(&mock_http_client, &lnurl, amount).await;
         assert!(error.is_err());
-        assert!(error.unwrap_err().to_string().contains("Domain can not be empty"));
+        assert!(error
+            .unwrap_err()
+            .to_string()
+            .contains("Domain can not be empty"));
     }
 
     #[tokio::test]

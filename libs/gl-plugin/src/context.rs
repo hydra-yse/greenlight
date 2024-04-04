@@ -10,9 +10,9 @@
 //!    sign off actually match the authentic commands by a valid
 //!    caller.
 
+use serde::{Deserialize, Serialize};
 use std::sync::Arc;
 use tokio::sync::Mutex;
-use serde::{Serialize, Deserialize};
 
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct Request {
@@ -59,7 +59,7 @@ impl From<Request> for crate::pb::PendingRequest {
             signature: r.signature,
             request: r.payload.to_vec(),
             uri: r.uri,
-	    timestamp: r.timestamp.unwrap_or_default(),
+            timestamp: r.timestamp.unwrap_or_default(),
         }
     }
 }

@@ -7,17 +7,15 @@ pub struct ProtocolList {
 
 #[cfg(test)]
 
-
 mod test {
 
-		use super::*;
-		
+    use super::*;
+
     #[test]
     fn serialize_protocol_list() {
         let protocols = ProtocolList {
             protocols: vec![1, 3],
         };
-
 
         let json_str = serde_json::to_string(&protocols).unwrap();
         assert_eq!(json_str, "{\"protocols\":[1,3]}")

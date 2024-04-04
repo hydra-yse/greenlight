@@ -29,10 +29,7 @@ pub struct LspClient {
 
 impl LspClient {
     pub fn new(client: Client, cln_client: ClnClient) -> Self {
-        Self {
-						client,
-            cln_client,
-        }
+        Self { client, cln_client }
     }
 
     /// Create a JSON-rpc request to a LSPS
@@ -54,8 +51,7 @@ impl LspClient {
         O: serde::de::DeserializeOwned,
     {
         let json_rpc_id = generate_random_rpc_id();
-        self
-            .request_with_json_rpc_id(peer_id, method, param, json_rpc_id)
+        self.request_with_json_rpc_id(peer_id, method, param, json_rpc_id)
             .await
     }
 
@@ -84,8 +80,7 @@ impl LspClient {
         // Core-lightning uses the convention that the first two bytes are the BOLT-8 message id
         let mut cursor: Cursor<Vec<u8>> = std::io::Cursor::new(Vec::new());
         cursor.write_all(&LSPS_MESSAGE_ID)?;
-        serde_json::to_writer(&mut cursor, &request)
-            .map_err(LspsError::JsonParseRequestError)?;
+        serde_json::to_writer(&mut cursor, &request).map_err(LspsError::JsonParseRequestError)?;
 
         let custom_message_request = SendcustommsgRequest {
             node_id: peer_id.to_vec(),

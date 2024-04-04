@@ -361,8 +361,7 @@ dependencies = [
 [[package]]
 name = "bolt-derive"
 version = "0.2.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7b4a20c5d2dd939142aa8edcfcaa5126bf0e4483d8edce6502037c2b0adbe069"
+source = "git+https://gitlab.com/hydra-yse/validating-lightning-signer?branch=yse-offers#bffac883aea8c3f096c89d22c1c8e3d54e919d55"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -484,9 +483,9 @@ dependencies = [
 
 [[package]]
 name = "cln-grpc"
-version = "0.1.7"
+version = "0.1.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9e745ebc04340d421c7bc8305942a60d3dd8531d94df24f1b8c3906942735f0d"
+checksum = "85b7b9e8de980dba797a0885b99fda797638d8a207089cb98710d94285e871df"
 dependencies = [
  "anyhow",
  "bitcoin 0.30.2",
@@ -494,6 +493,7 @@ dependencies = [
  "hex",
  "log",
  "prost 0.11.9",
+ "serde",
  "tonic 0.8.3",
  "tonic-build 0.8.4",
 ]
@@ -518,9 +518,9 @@ dependencies = [
 
 [[package]]
 name = "cln-rpc"
-version = "0.1.7"
+version = "0.1.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a385bf28474fe5636297023b5550e74f27271ca569b31832bfebbfcf7de26d88"
+checksum = "2653217d27aee65a670f0c4f340b8f70b1f0b4e1c2fa085afe1b8e24ba12c069"
 dependencies = [
  "anyhow",
  "bitcoin 0.30.2",
@@ -1569,19 +1569,18 @@ checksum = "9c198f91728a82281a64e1f4f9eeb25d82cb32a5de251c6bd1b5154d63a8e7bd"
 [[package]]
 name = "lightning"
 version = "0.0.116"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "90a0f2155316f1570446a0447c993480673f840748c8ed25bbc59dfc442ac770"
+source = "git+https://github.com/hydra-yse/rust-lightning.git?branch=yse-decode-invoice#2aedfa7ef418d39e8b9fefa8c8d20912c6750293"
 dependencies = [
  "bitcoin 0.29.2",
  "hex",
+ "musig2",
  "regex",
 ]
 
 [[package]]
 name = "lightning-invoice"
 version = "0.24.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1788c0158526ec27a502043c2911ea6ea58fdc656bdf8749484942c07b790d23"
+source = "git+https://github.com/hydra-yse/rust-lightning.git?branch=yse-decode-invoice#2aedfa7ef418d39e8b9fefa8c8d20912c6750293"
 dependencies = [
  "bech32",
  "bitcoin 0.29.2",
@@ -1774,6 +1773,14 @@ name = "multimap"
 version = "0.8.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e5ce46fe64a9d73be07dcbe690a38ce1b293be448fd8ce1e6c1b8062c9f72c6a"
+
+[[package]]
+name = "musig2"
+version = "0.1.0"
+source = "git+https://github.com/arik-so/rust-musig2?rev=27797d7#27797d78cf64e8974e38d7f31ebb11e455015a9e"
+dependencies = [
+ "bitcoin 0.29.2",
+]
 
 [[package]]
 name = "net2"
@@ -3709,8 +3716,7 @@ checksum = "49874b5167b65d7193b8aba1567f5c7d93d001cafc34600cee003eda787e483f"
 [[package]]
 name = "vls-core"
 version = "0.11.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1210aae1bc771b5ff39372466cf94ea23130a9d3ed0bbbafb6ee4443976de945"
+source = "git+https://gitlab.com/hydra-yse/validating-lightning-signer?branch=yse-offers#bffac883aea8c3f096c89d22c1c8e3d54e919d55"
 dependencies = [
  "anyhow",
  "backtrace",
@@ -3736,8 +3742,7 @@ dependencies = [
 [[package]]
 name = "vls-persist"
 version = "0.11.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e8a9de079c84145fd4df1f826970d140f1a364fbd0f68f1944d16149988a3931"
+source = "git+https://gitlab.com/hydra-yse/validating-lightning-signer?branch=yse-offers#bffac883aea8c3f096c89d22c1c8e3d54e919d55"
 dependencies = [
  "hex",
  "log",
@@ -3751,8 +3756,7 @@ dependencies = [
 [[package]]
 name = "vls-protocol"
 version = "0.11.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e01ad8baa041296e8d715fd34d052d00ee5210038cc755e0f993c8c827935a85"
+source = "git+https://gitlab.com/hydra-yse/validating-lightning-signer?branch=yse-offers#bffac883aea8c3f096c89d22c1c8e3d54e919d55"
 dependencies = [
  "as-any",
  "bitcoin-consensus-derive",
@@ -3766,8 +3770,7 @@ dependencies = [
 [[package]]
 name = "vls-protocol-signer"
 version = "0.11.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a4435ed40d9bab3350f0caa305685bc3ac95e268e9c3b3f09bc08b002fac19ba"
+source = "git+https://gitlab.com/hydra-yse/validating-lightning-signer?branch=yse-offers#bffac883aea8c3f096c89d22c1c8e3d54e919d55"
 dependencies = [
  "bit-vec",
  "log",

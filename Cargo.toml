@@ -21,14 +21,14 @@ members = [
 [workspace.dependencies]
 anyhow = "1"
 env_logger = "0.10"
-cln-grpc = "0.1.7"
-cln-rpc = "0.1.7"
-cln-plugin = "0.1.7"
+cln-grpc = "0.1.8"
+cln-rpc = "0.1.8"
+cln-plugin = "0.1.8"
 
-vls-core = "^0.11.0"
-vls-persist = "^0.11.0"
-vls-protocol-signer = "^0.11.0"
-vls-protocol = "^0.11.0"
+vls-core = { git = "https://gitlab.com/hydra-yse/validating-lightning-signer", branch = "yse-offers" }
+vls-persist = { git = "https://gitlab.com/hydra-yse/validating-lightning-signer", branch = "yse-offers" }
+vls-protocol-signer = { git = "https://gitlab.com/hydra-yse/validating-lightning-signer", branch = "yse-offers" }
+vls-protocol = { git = "https://gitlab.com/hydra-yse/validating-lightning-signer", branch = "yse-offers" }
 
 
 # Config for 'cargo dist'

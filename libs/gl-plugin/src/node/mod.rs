@@ -24,10 +24,9 @@ use tokio::sync::{broadcast, mpsc, Mutex, OnceCell};
 use tokio_stream::wrappers::ReceiverStream;
 use tonic::{transport::ServerTlsConfig, Code, Request, Response, Status};
 mod wrapper;
-pub use wrapper::WrappedNodeServer;
 use gl_client::bitcoin;
 use std::str::FromStr;
-
+pub use wrapper::WrappedNodeServer;
 
 static LIMITER: OnceCell<RateLimiter<NotKeyed, InMemoryState, MonotonicClock>> =
     OnceCell::const_new();
@@ -131,14 +130,11 @@ impl PluginNodeServer {
                 }
             }
 
-	    // Signal that the RPC is ready now.
-	    RPC_READY.store(true, Ordering::SeqCst);
+            // Signal that the RPC is ready now.
+            RPC_READY.store(true, Ordering::SeqCst);
 
-            let list_datastore_req = cln_rpc::model::requests::ListdatastoreRequest{
-                key: Some(vec![
-                    "glconf".to_string(),
-                    "request".to_string()
-                ])
+            let list_datastore_req = cln_rpc::model::requests::ListdatastoreRequest {
+                key: Some(vec!["glconf".to_string(), "request".to_string()]),
             };
 
             let res: Result<cln_rpc::model::responses::ListdatastoreResponse, crate::rpc::Error> =
@@ -147,11 +143,14 @@ impl PluginNodeServer {
             match res {
                 Ok(list_datastore_res) => {
                     if list_datastore_res.datastore.len() > 0 {
-                        let serialized_configure_request = list_datastore_res.datastore[0].string.clone();
+                        let serialized_configure_request =
+                            list_datastore_res.datastore[0].string.clone();
                         match serialized_configure_request {
                             Some(serialized_configure_request) => {
-                                let mut cached_serialized_configure_request = SERIALIZED_CONFIGURE_REQUEST.lock().await;
-                                *cached_serialized_configure_request = Some(serialized_configure_request);
+                                let mut cached_serialized_configure_request =
+                                    SERIALIZED_CONFIGURE_REQUEST.lock().await;
+                                *cached_serialized_configure_request =
+                                    Some(serialized_configure_request);
                             }
                             None => {}
                         }
@@ -159,7 +158,7 @@ impl PluginNodeServer {
                 }
                 Err(_) => {}
             }
-            
+
             drop(rpc);
         });
 
@@ -462,7 +461,10 @@ impl Node for PluginNodeServer {
         return Ok(Response::new(ReceiverStream::new(rx)));
     }
 
-    async fn configure(&self, req: tonic::Request<pb::GlConfig>) -> Result<Response<pb::Empty>, Status>  {
+    async fn configure(
+        &self,
+        req: tonic::Request<pb::GlConfig>,
+    ) -> Result<Response<pb::Empty>, Status> {
         self.limit().await;
         let gl_config = req.into_inner();
         let rpc = self.get_rpc().await;
@@ -485,7 +487,7 @@ impl Node for PluginNodeServer {
                     ));
             }
         };
-    
+
         match bitcoin::Address::from_str(&gl_config.close_to_addr) {
             Ok(address) => {
                 if address.network != network {
@@ -494,8 +496,7 @@ impl Node for PluginNodeServer {
                         format!(
                             "Network mismatch: \
                             Expected an address for {} but received an address for {}",
-                            network,
-                            address.network
+                            network, address.network
                         ),
                     ));
                 }
@@ -503,22 +504,38 @@ impl Node for PluginNodeServer {
             Err(e) => {
                 return Err(Status::new(
                     Code::Unknown,
-                    format!("The address {} is not valid: {}", gl_config.close_to_addr, e),
+                    format!(
+                        "The address {} is not valid: {}",
+                        gl_config.close_to_addr, e
+                    ),
                 ));
             }
         }
 
-        let requests: Vec<crate::context::Request> = self.ctx.snapshot().await.into_iter().map(|r| r.into()).collect();
+        let requests: Vec<crate::context::Request> = self
+            .ctx
+            .snapshot()
+            .await
+            .into_iter()
+            .map(|r| r.into())
+            .collect();
         let serialized_req = serde_json::to_string(&requests[0]).unwrap();
-        let datastore_res: Result<crate::cln_rpc::model::responses::DatastoreResponse, crate::rpc::Error> =
-            rpc.call("datastore", json!({
-                "key": vec![
-                    "glconf".to_string(),
-                    "request".to_string(),
-                ],
-                "string": serialized_req,
-            })).await;
-        
+        let datastore_res: Result<
+            crate::cln_rpc::model::responses::DatastoreResponse,
+            crate::rpc::Error,
+        > = rpc
+            .call(
+                "datastore",
+                json!({
+                    "key": vec![
+                        "glconf".to_string(),
+                        "request".to_string(),
+                    ],
+                    "string": serialized_req,
+                }),
+            )
+            .await;
+
         match datastore_res {
             Ok(_) => {
                 let mut cached_gl_config = SERIALIZED_CONFIGURE_REQUEST.lock().await;
@@ -529,7 +546,10 @@ impl Node for PluginNodeServer {
             Err(e) => {
                 return Err(Status::new(
                     Code::Unknown,
-                    format!("Failed to store the raw configure request in the datastore: {}", e),
+                    format!(
+                        "Failed to store the raw configure request in the datastore: {}",
+                        e
+                    ),
                 ))
             }
         }
@@ -580,7 +600,7 @@ impl PluginNodeServer {
 
         for r in peers {
             trace!("Calling connect: {:?}", &r.id);
-            let res = rpc.call_typed(r.clone()).await;
+            let res = rpc.call_typed(&r).await;
             trace!("Connect returned: {:?} -> {:?}", &r.id, res);
 
             match res {
@@ -597,7 +617,7 @@ impl PluginNodeServer {
         let rpc_path = self.rpc_path.clone();
         let mut rpc = cln_rpc::ClnRpc::new(rpc_path).await?;
         let peers = rpc
-            .call_typed(cln_rpc::model::requests::ListpeersRequest {
+            .call_typed(&cln_rpc::model::requests::ListpeersRequest {
                 id: None,
                 level: None,
             })
@@ -615,7 +635,7 @@ impl PluginNodeServer {
             .collect();
 
         let mut dspeers: Vec<cln_rpc::model::requests::ConnectRequest> = rpc
-            .call_typed(cln_rpc::model::requests::ListdatastoreRequest {
+            .call_typed(&cln_rpc::model::requests::ListdatastoreRequest {
                 key: Some(vec!["greenlight".to_string(), "peerlist".to_string()]),
             })
             .await?

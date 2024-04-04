@@ -56,7 +56,7 @@ pub fn parse_withdraw_request_response_from_url(url: &str) -> Option<WithdrawReq
         match serde_json::from_value(Value::Object(query_params)) {
             Ok(w) => {
                 return w;
-            },
+            }
             Err(e) => {
                 debug!("{:?}", e);
                 return None;
@@ -73,25 +73,27 @@ mod tests {
 
     #[test]
     fn test_build_withdraw_request_callback_url() -> Result<()> {
-
-        let k1 =  String::from("unique");
+        let k1 = String::from("unique");
         let invoice = String::from("invoice");
 
-        let built_withdraw_request_callback_url = build_withdraw_request_callback_url(&WithdrawRequestResponse { 
-            tag: String::from("withdraw"), 
-            callback: String::from("https://cipherpunk.com/"), 
-            k1: k1.clone(), 
-            default_description: String::from(""), 
-            min_withdrawable: 2, 
-            max_withdrawable: 300, 
-        }, invoice.clone());
+        let built_withdraw_request_callback_url = build_withdraw_request_callback_url(
+            &WithdrawRequestResponse {
+                tag: String::from("withdraw"),
+                callback: String::from("https://cipherpunk.com/"),
+                k1: k1.clone(),
+                default_description: String::from(""),
+                min_withdrawable: 2,
+                max_withdrawable: 300,
+            },
+            invoice.clone(),
+        );
 
         let url = Url::parse(&built_withdraw_request_callback_url.unwrap())?;
         let query_pairs = url.query_pairs().collect::<Value>();
         let query_params: &Map<String, Value> = query_pairs.as_object().unwrap();
-        
-       assert_eq!(query_params.get("k1").unwrap().as_str().unwrap(), k1);
-       assert_eq!(query_params.get("pr").unwrap().as_str().unwrap(), invoice);
+
+        assert_eq!(query_params.get("k1").unwrap().as_str().unwrap(), k1);
+        assert_eq!(query_params.get("pr").unwrap().as_str().unwrap(), invoice);
 
         Ok(())
     }

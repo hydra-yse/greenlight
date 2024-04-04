@@ -99,7 +99,7 @@ impl LnUrlHttpClient for LnUrlHttpClearnetClient {
         self.get::<WithdrawRequestResponse>(url).await
     }
 
-    async fn send_invoice_for_withdraw_request(&self, url: &str) -> Result<OkResponse>{
+    async fn send_invoice_for_withdraw_request(&self, url: &str) -> Result<OkResponse> {
         self.get::<OkResponse>(url).await
     }
 }
